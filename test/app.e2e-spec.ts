@@ -21,4 +21,24 @@ describe('AppController (e2e)', () => {
       .expect(200)
       .expect('Hello World!');
   });
+
+  it('/ POST login', () => {
+    return request(app.getHttpServer())
+      .post('/login')
+      .send({
+        username: 'ciao',
+        password: 'bruh',
+      })
+      .expect(201)
+      .expect(res => res.body === true);
+  });
+
+  it('/ POST Login should fail with incorrect data', () => {
+    return request(app.getHttpServer())
+      .post('/login')
+      .send({
+        username: 2,
+      })
+      .expect(400);
+  });
 });
