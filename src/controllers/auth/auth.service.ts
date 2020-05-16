@@ -3,7 +3,7 @@ import { LoginDto } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
-  async login(loginDto: LoginDto) {
-    return loginDto;
-  }
+	async login(loginDto: LoginDto) {
+		return loginDto;
+	}
 }

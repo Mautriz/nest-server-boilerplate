@@ -6,10 +6,10 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('AUTH')
 @Controller()
 export class AuthController {
-  constructor(private authService: AuthService) {}
+	constructor(private authService: AuthService) {}
 
-  @Post('login')
-  login(@Body() loginDto: LoginDto): Promise<LoginDto> {
-    return this.authService.login(loginDto);
-  }
+	@Post('login')
+	login(@Body() loginDto: LoginDto): Promise<LoginDto> {
+		return this.authService.login(loginDto);
+	}
 }

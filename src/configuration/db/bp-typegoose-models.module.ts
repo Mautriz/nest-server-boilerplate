@@ -5,7 +5,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 const MODELS = [User];
 
 @Module({
-  imports: [TypegooseModule.forFeature([...MODELS])],
-  exports: [TypegooseModule],
+	imports: [TypegooseModule.forFeature([...MODELS])],
+	exports: [TypegooseModule],
 })
 export class BpTypegooseModelsModule {}

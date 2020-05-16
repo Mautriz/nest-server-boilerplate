@@ -4,8 +4,8 @@ import { BpTypegooseModule } from './db/bp-typegoose.module';
 import { BpConfigModule } from './config/bp-config.module';
 
 @Module({
-  imports: [BpTypegooseModule, BpConfigModule],
-  providers: [BpLogger],
-  exports: [BpConfigModule, BpLogger, BpTypegooseModule],
+	imports: [BpTypegooseModule, BpConfigModule],
+	providers: [BpLogger],
+	exports: [BpConfigModule, BpLogger, BpTypegooseModule],
 })
 export class ConfigurationModule {}

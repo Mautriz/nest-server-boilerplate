@@ -8,22 +8,22 @@ import { AuthModule } from './controllers/auth/auth.module';
 import { APP_PIPE } from '@nestjs/core';
 
 @Module({
-  imports: [ConfigurationModule, UserModule, AuthModule],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_PIPE,
-      useFactory: () =>
-        new ValidationPipe({
-          transform: true,
-          whitelist: true,
-        }),
-    },
-  ],
+	imports: [ConfigurationModule, UserModule, AuthModule],
+	controllers: [AppController],
+	providers: [
+		AppService,
+		{
+			provide: APP_PIPE,
+			useFactory: () =>
+				new ValidationPipe({
+					transform: true,
+					whitelist: true,
+				}),
+		},
+	],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(UserFromJwtMiddleware).forRoutes('*');
-  }
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(UserFromJwtMiddleware).forRoutes('*');
+	}
 }
