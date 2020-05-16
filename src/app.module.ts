@@ -6,9 +6,22 @@ import { UserModule } from './controllers/user/user.module';
 import { UserFromJwtMiddleware } from './middlewares/user-from-jwt/user-from-jwt.middleware';
 import { AuthModule } from './controllers/auth/auth.module';
 import { APP_PIPE } from '@nestjs/core';
+// import { ServeStaticModule } from '@nestjs/serve-static';
+// import { join } from 'path';
+import { RequestsModule } from './communication/requests/requests.module';
+import { MessagingModule } from './communication/messaging/messaging.module';
 
 @Module({
-	imports: [ConfigurationModule, UserModule, AuthModule],
+	imports: [
+		ConfigurationModule,
+		UserModule,
+		AuthModule,
+		RequestsModule,
+		MessagingModule,
+		// ServeStaticModule.forRoot({
+		// 	rootPath: join(process.cwd(), 'assets'),
+		// }),
+	],
 	controllers: [AppController],
 	providers: [
 		AppService,

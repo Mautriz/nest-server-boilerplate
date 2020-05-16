@@ -22,7 +22,7 @@ COPY package*.json ./
 RUN npm install --only=production
 
 # ? Non sono sicuro che questo serva a qualcosa
-COPY . .
+# COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
