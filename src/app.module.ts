@@ -5,19 +5,20 @@ import { ConfigurationModule } from './configuration/configuration.module';
 import { UserModule } from './controllers/user/user.module';
 import { UserFromJwtMiddleware } from './middlewares/user-from-jwt/user-from-jwt.middleware';
 import { AuthModule } from './controllers/auth/auth.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [ConfigurationModule, UserModule, AuthModule],
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_PIPE,
-    //   useValue: new ValidationPipe({
-    //     transform: true,
-    //     whitelist: true,
-    //   }),
-    // },
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        transform: true,
+        whitelist: true,
+      }),
+    },
   ],
 })
 export class AppModule implements NestModule {

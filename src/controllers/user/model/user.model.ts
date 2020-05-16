@@ -1,5 +1,5 @@
 import { prop, modelOptions } from '@typegoose/typegoose';
-import { ReturnModelType } from '@typegoose/typegoose/lib/types';
+import { ReturnModelType, DocumentType } from '@typegoose/typegoose/lib/types';
 
 @modelOptions({
   schemaOptions: {
@@ -29,13 +29,17 @@ export class User {
   /**
    * Instance methods
    */
+  changeName(this: UserDocument) {
+    this.username = 'Franco';
+  }
 
   /**
    * Static methods
    */
-  static async mioMetodo(this: ReturnModelType<typeof User>) {
+  static async mioMetodo(this: UserModel) {
     return await this.create({ username: 'ciao', password: 'ciao2' });
   }
 }
 
+export type UserDocument = DocumentType<User>;
 export type UserModel = ReturnModelType<typeof User>;

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Body } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 
@@ -43,12 +43,12 @@ describe('AppController (e2e)', () => {
       .expect(400);
   });
 
-  it('/ POSTT User should create a user', () => {
+  it('/ POST User should create a user', done => {
     return request(app.getHttpServer())
-      .post('/login')
+      .post('/user')
       .send()
       .expect(res => {
-        console.log({ res });
+        console.log(res.body);
         expect(res.status).toBeLessThan(400);
       });
   });

@@ -7,6 +7,8 @@ export class UserService {
   constructor(@InjectModel(User) private user: UserModel) {}
 
   async createUser(): Promise<User> {
-    return await this.user.mioMetodo();
+    const user = await this.user.mioMetodo();
+    user.changeName();
+    return user;
   }
 }
