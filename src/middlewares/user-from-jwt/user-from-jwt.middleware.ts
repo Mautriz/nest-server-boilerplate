@@ -1,8 +1,5 @@
-import { JwtPayload } from '../../controllers/user/model/jwt.payload';
-import { BpConfigService } from './../../configuration/config/config.service';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
 import { BpLogger } from '../../configuration/logger/bp-logger.service';
 import { jwtBpVerify } from '../../helpers/jwt.helpers';
 

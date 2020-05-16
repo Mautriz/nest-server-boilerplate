@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { BpConfigService } from './configuration/config/config.service';
+import { BpConfig } from './configuration/config/config.service';
 import * as compression from 'compression';
+
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
@@ -18,6 +19,6 @@ async function bootstrap() {
 	const document = SwaggerModule.createDocument(app, options);
 	SwaggerModule.setup('api', app, document);
 
-	await app.listen(app.get(BpConfigService).get().port);
+	await app.listen(BpConfig.get().port);
 }
 bootstrap();

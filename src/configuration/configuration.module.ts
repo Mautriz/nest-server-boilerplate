@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BpLogger } from './logger/bp-logger.service';
 import { BpTypegooseModule } from './db/bp-typegoose.module';
-import { BpConfigModule } from './config/bp-config.module';
 
 @Module({
-	imports: [BpTypegooseModule, BpConfigModule],
+	imports: [BpTypegooseModule],
 	providers: [BpLogger],
-	exports: [BpConfigModule, BpLogger, BpTypegooseModule],
+	exports: [BpLogger, BpTypegooseModule],
 })
 export class ConfigurationModule {}

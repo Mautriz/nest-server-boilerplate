@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { Algorithm } from 'jsonwebtoken';
 
 type AppConfiguration = {
@@ -23,35 +22,30 @@ type AppConfiguration = {
 	};
 };
 
-@Injectable()
-export class BpConfigService {
-	private static config: AppConfiguration;
+export class BpConfig {
+	private static config: AppConfiguration = {
+		mongo: {
+			username: BpConfig.env('MONGO_USERNAME'),
+			password: BpConfig.env('MONGO_PASSWORD'),
+			db: BpConfig.env('MONGO_DB', 'nest'),
+			serviceName: BpConfig.env('MONGO_SERVICE_NAME', 'localhost'),
+			port: BpConfig.env('MONGO_PORT', '27020'),
+			uri: BpConfig.env('MONGO_URI'),
+		},
+		port: BpConfig.env('JWT_REFRESH_SECRET_KEY', '3000'),
+		jwt: {
+			secretKey: BpConfig.env('JWT_SECRET_KEY', '2673t7c28723xtrbgdsf'),
+			accessDuration: BpConfig.env('JWT_DURATION', '30m'),
+			refreshSecretKey: BpConfig.env('JWT_REFRESH_SECRET_KEY', 'hiadiuohj8922uohdo'),
+			refreshDuration: BpConfig.env('JWT_REFRESH_DURATION', '1h'),
+			algorithm: BpConfig.env('JWT_ALGORITHM', 'HS512') as Algorithm,
+		},
+		bcrypt: {
+			saltRounds: Number(BpConfig.env('BCRYPT_SALT_ROUNDS', '12')),
+		},
+	};
 
-	constructor() {
-		BpConfigService.config = {
-			mongo: {
-				username: BpConfigService.getEnv('MONGO_USERNAME'),
-				password: BpConfigService.getEnv('MONGO_PASSWORD'),
-				db: BpConfigService.getEnv('MONGO_DB', 'nest'),
-				serviceName: BpConfigService.getEnv('MONGO_SERVICE_NAME', 'localhost'),
-				port: BpConfigService.getEnv('MONGO_PORT', '27020'),
-				uri: BpConfigService.getEnv('MONGO_URI'),
-			},
-			port: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', '3000'),
-			jwt: {
-				secretKey: BpConfigService.getEnv('JWT_SECRET_KEY', '2673t7c28723xtrbgdsf'),
-				accessDuration: BpConfigService.getEnv('JWT_DURATION', '30m'),
-				refreshSecretKey: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'hiadiuohj8922uohdo'),
-				refreshDuration: BpConfigService.getEnv('JWT_REFRESH_DURATION', '1h'),
-				algorithm: BpConfigService.getEnv('JWT_ALGORITHM', 'HS512') as Algorithm,
-			},
-			bcrypt: {
-				saltRounds: Number(BpConfigService.getEnv('BCRYPT_SALT_ROUNDS', '12')),
-			},
-		};
-	}
-
-	getMongoUri() {
+	static getMongoUri() {
 		const { uri, username, password, db, port, serviceName } = this.get().mongo;
 		let authString = '';
 		if (username || password) authString = `${username}:${password}@`;
@@ -60,14 +54,14 @@ export class BpConfigService {
 	}
 
 	get() {
-		return BpConfigService.config;
+		return BpConfig.config;
 	}
 
 	static get() {
-		return BpConfigService.config;
+		return BpConfig.config;
 	}
 
-	static getEnv(VAR: string, defaultValue?: string): string {
+	static env(VAR: string, defaultValue?: string): string {
 		return process.env[VAR] || defaultValue;
 	}
 
