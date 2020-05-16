@@ -20,10 +20,16 @@ type AppConfiguration = {
 	bcrypt: {
 		saltRounds: number;
 	};
+	redis: {
+		port: number;
+	};
+	hosts: {
+		bigui: string;
+	};
 };
 
 export class BpConfig {
-	private static config: AppConfiguration = {
+	private static __config: AppConfiguration = {
 		mongo: {
 			username: BpConfig.env('MONGO_USERNAME'),
 			password: BpConfig.env('MONGO_PASSWORD'),
@@ -43,30 +49,27 @@ export class BpConfig {
 		bcrypt: {
 			saltRounds: Number(BpConfig.env('BCRYPT_SALT_ROUNDS', '12')),
 		},
+		redis: {
+			port: Number(BpConfig.env('BCRYPT_SALT_ROUNDS', '12')),
+		},
+		hosts: {
+			bigui: BpConfig.env('HOST_BIGUI', 'bigui-url'),
+		},
 	};
 
+	static get cfg() {
+		return BpConfig.__config;
+	}
+
 	static getMongoUri() {
-		const { uri, username, password, db, port, serviceName } = this.get().mongo;
+		const { uri, username, password, db, port, serviceName } = this.cfg.mongo;
 		let authString = '';
 		if (username || password) authString = `${username}:${password}@`;
 		const mongoUri = uri || `mongodb://${authString}${serviceName}:${port}/${db}`;
 		return mongoUri;
 	}
 
-	get() {
-		return BpConfig.config;
-	}
-
-	static get() {
-		return BpConfig.config;
-	}
-
 	static env(VAR: string, defaultValue?: string): string {
 		return process.env[VAR] || defaultValue;
-	}
-
-	// da implementare
-	static setEnv() {
-		return;
 	}
 }
