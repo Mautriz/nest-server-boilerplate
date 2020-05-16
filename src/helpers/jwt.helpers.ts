@@ -1,6 +1,7 @@
 import { JwtPayload, JwtRefreshPayload } from '../controllers/user/model/jwt.payload';
 import * as jwt from 'jsonwebtoken';
 import { BpConfig } from '../configuration/config/config.service';
+import * as crypto from 'crypto';
 
 export function jwtBpEncode(payload: JwtPayload): string {
 	const { secretKey, algorithm, accessDuration } = BpConfig.get().jwt;
@@ -24,4 +25,8 @@ export function jwtRefreshBpVerify(refresh_token: string): JwtRefreshPayload | u
 	return jwt.verify(refresh_token, refreshSecretKey, {
 		algorithms: [algorithm],
 	}) as JwtPayload;
+}
+
+export function generateToken() {
+	return crypto.randomBytes(32).toString('hex');
 }
