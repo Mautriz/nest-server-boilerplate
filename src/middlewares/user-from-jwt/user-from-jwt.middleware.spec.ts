@@ -1,4 +1,4 @@
-import { ConfigService } from './../../configuration/config/config.service';
+import { BpConfigService } from './../../configuration/config/config.service';
 import { UserFromJwtMiddleware } from './user-from-jwt.middleware';
 import { createRequest } from '../../../test/utils/express-mock.helpers';
 import { BpLogger } from '../../configuration/logger/bp-logger.service';
@@ -8,7 +8,7 @@ describe('UserFromJwtMiddleware', () => {
   let jwt: string;
 
   beforeAll(() => {
-    middleware = new UserFromJwtMiddleware(new ConfigService(), new BpLogger());
+    middleware = new UserFromJwtMiddleware(new BpConfigService(), new BpLogger());
     jwt = 'cciaooo';
   });
 

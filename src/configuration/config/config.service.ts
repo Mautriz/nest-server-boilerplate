@@ -19,29 +19,29 @@ type AppConfiguration = {
 };
 
 @Injectable()
-export class ConfigService {
+export class BpConfigService {
   private readonly config: AppConfiguration;
 
   constructor() {
     this.config = {
       mongo: {
-        username: ConfigService.getEnv('MONGO_USERNAME', 'root'),
-        password: ConfigService.getEnv('MONGO_PASSWORD', 'example'),
-        db: ConfigService.getEnv('MONGO_DB', 'nest'),
-        serviceName: ConfigService.getEnv('MONGO_SERVICE_NAME', 'mongo'),
-        port: ConfigService.getEnv('MONGO_PORT', '27020'),
-        uri: ConfigService.getEnv('MONGO_URI'),
+        username: BpConfigService.getEnv('MONGO_USERNAME', 'root'),
+        password: BpConfigService.getEnv('MONGO_PASSWORD', 'example'),
+        db: BpConfigService.getEnv('MONGO_DB', 'nest'),
+        serviceName: BpConfigService.getEnv('MONGO_SERVICE_NAME', 'mongo'),
+        port: BpConfigService.getEnv('MONGO_PORT', '27020'),
+        uri: BpConfigService.getEnv('MONGO_URI'),
       },
-      port: ConfigService.getEnv('JWT_REFRESH_SECRET_KEY', '3000'),
+      port: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', '3000'),
       jwt: {
-        secretKey: ConfigService.getEnv('JWT_SECRET_KEY', '2673t7c28723xtrbgdsf'),
-        refreshSecretKey: ConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'hiadiuohj8922uohdo'),
-        algorithm: ConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'HS512') as Algorithm,
+        secretKey: BpConfigService.getEnv('JWT_SECRET_KEY', '2673t7c28723xtrbgdsf'),
+        refreshSecretKey: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'hiadiuohj8922uohdo'),
+        algorithm: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'HS512') as Algorithm,
       },
     };
   }
 
-  mongoUri() {
+  getMongoUri() {
     const { uri, username, password, db, port, serviceName } = this.get().mongo;
     return uri || `mongodb://${username}:${password}@${serviceName}:${port}/${db}`;
   }
@@ -52,5 +52,10 @@ export class ConfigService {
 
   static getEnv(VAR: string, defaultValue?: string): string {
     return process.env[VAR] || defaultValue;
+  }
+
+  // da implementare
+  static setEnv() {
+    return;
   }
 }

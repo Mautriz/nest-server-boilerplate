@@ -1,5 +1,5 @@
 import { JwtPayload } from '../../controllers/user/model/jwt.payload';
-import { ConfigService } from './../../configuration/config/config.service';
+import { BpConfigService } from './../../configuration/config/config.service';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
@@ -7,7 +7,7 @@ import { BpLogger } from '../../configuration/logger/bp-logger.service';
 
 @Injectable()
 export class UserFromJwtMiddleware implements NestMiddleware {
-  constructor(private config: ConfigService, private logger: BpLogger) {
+  constructor(private config: BpConfigService, private logger: BpLogger) {
     logger.setContext('UserFromJwtMiddleware');
   }
 
