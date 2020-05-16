@@ -50,7 +50,7 @@ export class BpConfig {
 			saltRounds: Number(BpConfig.env('BCRYPT_SALT_ROUNDS', '12')),
 		},
 		redis: {
-			port: Number(BpConfig.env('BCRYPT_SALT_ROUNDS', '12')),
+			port: Number(BpConfig.env('REDIS_PORT', '12')),
 		},
 		hosts: {
 			bigui: BpConfig.env('HOST_BIGUI', 'bigui-url'),
