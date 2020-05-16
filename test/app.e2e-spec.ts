@@ -42,4 +42,14 @@ describe('AppController (e2e)', () => {
       })
       .expect(400);
   });
+
+  it('/ POSTT User should create a user', () => {
+    return request(app.getHttpServer())
+      .post('/login')
+      .send()
+      .expect(res => {
+        console.log({ res });
+        expect(res.status).toBeLessThan(400);
+      });
+  });
 });

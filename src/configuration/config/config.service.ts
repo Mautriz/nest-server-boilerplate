@@ -25,10 +25,10 @@ export class BpConfigService {
   constructor() {
     this.config = {
       mongo: {
-        username: BpConfigService.getEnv('MONGO_USERNAME', 'root'),
-        password: BpConfigService.getEnv('MONGO_PASSWORD', 'example'),
+        username: BpConfigService.getEnv('MONGO_USERNAME'),
+        password: BpConfigService.getEnv('MONGO_PASSWORD'),
         db: BpConfigService.getEnv('MONGO_DB', 'nest'),
-        serviceName: BpConfigService.getEnv('MONGO_SERVICE_NAME', 'mongo'),
+        serviceName: BpConfigService.getEnv('MONGO_SERVICE_NAME', 'localhost'),
         port: BpConfigService.getEnv('MONGO_PORT', '27020'),
         uri: BpConfigService.getEnv('MONGO_URI'),
       },
@@ -43,7 +43,10 @@ export class BpConfigService {
 
   getMongoUri() {
     const { uri, username, password, db, port, serviceName } = this.get().mongo;
-    return uri || `mongodb://${username}:${password}@${serviceName}:${port}/${db}`;
+    let authString = '';
+    if (username || password) authString = `${username}:${password}@`;
+    const mongoUri = uri || `mongodb://${authString}${serviceName}:${port}/${db}`;
+    return mongoUri;
   }
 
   get() {
