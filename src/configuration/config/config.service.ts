@@ -13,7 +13,9 @@ type AppConfiguration = {
 	port: number | string;
 	jwt: {
 		secretKey: string;
+		accessDuration: string | number;
 		refreshSecretKey: string;
+		refreshDuration: string | number;
 		algorithm: Algorithm;
 	};
 	bcrypt: {
@@ -38,8 +40,10 @@ export class BpConfigService {
 			port: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', '3000'),
 			jwt: {
 				secretKey: BpConfigService.getEnv('JWT_SECRET_KEY', '2673t7c28723xtrbgdsf'),
+				accessDuration: BpConfigService.getEnv('JWT_DURATION', '30m'),
 				refreshSecretKey: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'hiadiuohj8922uohdo'),
-				algorithm: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'HS512') as Algorithm,
+				refreshDuration: BpConfigService.getEnv('JWT_REFRESH_DURATION', '1h'),
+				algorithm: BpConfigService.getEnv('JWT_ALGORITHM', 'HS512') as Algorithm,
 			},
 			bcrypt: {
 				saltRounds: Number(BpConfigService.getEnv('BCRYPT_SALT_ROUNDS', '12')),
