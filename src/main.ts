@@ -2,10 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BpConfigService } from './configuration/config/config.service';
-
+import * as compression from 'compression';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
+  app.use(compression());
 
   const options = new DocumentBuilder()
     .setTitle('Big Authorization')
