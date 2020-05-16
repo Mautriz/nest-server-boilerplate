@@ -16,14 +16,17 @@ type AppConfiguration = {
     refreshSecretKey: string;
     algorithm: Algorithm;
   };
+  bcrypt: {
+    saltRounds: number;
+  };
 };
 
 @Injectable()
 export class BpConfigService {
-  private readonly config: AppConfiguration;
+  private static config: AppConfiguration;
 
   constructor() {
-    this.config = {
+    BpConfigService.config = {
       mongo: {
         username: BpConfigService.getEnv('MONGO_USERNAME'),
         password: BpConfigService.getEnv('MONGO_PASSWORD'),
@@ -38,6 +41,9 @@ export class BpConfigService {
         refreshSecretKey: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'hiadiuohj8922uohdo'),
         algorithm: BpConfigService.getEnv('JWT_REFRESH_SECRET_KEY', 'HS512') as Algorithm,
       },
+      bcrypt: {
+        saltRounds: Number(BpConfigService.getEnv('BCRYPT_SALT_ROUNDS', '12')),
+      },
     };
   }
 
@@ -50,7 +56,11 @@ export class BpConfigService {
   }
 
   get() {
-    return this.config;
+    return BpConfigService.config;
+  }
+
+  static get() {
+    return BpConfigService.config;
   }
 
   static getEnv(VAR: string, defaultValue?: string): string {
