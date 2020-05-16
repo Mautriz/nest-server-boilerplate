@@ -4,11 +4,15 @@ import { User, UserModel } from './model/user.model';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User) private user: UserModel) {}
+  constructor(@InjectModel(User) private userModel: UserModel) {}
 
   async createUser(): Promise<User> {
-    const user = await this.user.mioMetodo();
-    user.changeName();
+    const user = await this.userModel.cmCreate();
+    this.userModel.removeBlacklistedProperties(user);
     return user;
+  }
+
+  async findByUsername(): Promise<User> {
+    return await this.userModel.findByUsername('ciao').exec();
   }
 }
