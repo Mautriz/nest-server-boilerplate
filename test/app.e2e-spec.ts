@@ -38,6 +38,7 @@ describe('AppController (e2e)', () => {
       .post('/login')
       .send({
         username: 2,
+        password: 555,
       })
       .expect(400);
   });

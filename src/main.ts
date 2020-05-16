@@ -5,12 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  const options = new DocumentBuilder()
-    .setTitle('Big Authorization')
-    .setDescription("Microservizio per l'autenticazione dei vari servizi BigProfiles")
-    .setVersion('1.0')
-    .build();
+  app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -19,10 +14,15 @@ async function bootstrap() {
     }),
   );
 
+  const options = new DocumentBuilder()
+    .setTitle('Big Authorization')
+    .setDescription("Microservizio per l'autenticazione dei vari servizi BigProfiles")
+    .setVersion('1.0')
+    .build();
+
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  app.setGlobalPrefix('api');
   await app.listen(3000);
 }
 bootstrap();
