@@ -5,7 +5,6 @@ const blacklist = ['__v', 'id', 'password'];
 
 @pre<User>('save', async function() {
   if (!this.isModified('password')) return;
-  console.log('CALL');
   this.password = await hashPassword(this.password);
   return;
 })

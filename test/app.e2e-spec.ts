@@ -43,14 +43,14 @@ describe('AppController (e2e)', () => {
       .expect(400);
   });
 
-  it('/ POST User should create a user', done => {
+  it('/ POST User should create a user and select only the right properties', done => {
     return request(app.getHttpServer())
       .post('/user')
       .send({})
       .expect(res => {
         expect(res.status).toBeLessThan(400);
-        expect(typeof res.body.password).toBe('string');
-        return;
+        expect(res.body.username).toBeDefined();
+        expect(res.body.password).toBeUndefined();
       })
       .end(done);
   });
