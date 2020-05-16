@@ -1,8 +1,8 @@
 import { Module, HttpModule } from '@nestjs/common';
-import { BigUiService } from './big-ui.service';
+import { BigUiDataService } from './big-ui-data.service';
 
 @Module({
 	imports: [HttpModule],
-	providers: [BigUiService],
+	providers: [BigUiDataService],
 })
 export class RequestsModule {}

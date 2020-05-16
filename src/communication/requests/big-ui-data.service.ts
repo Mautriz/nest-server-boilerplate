@@ -5,7 +5,7 @@ type ExampleResponse = {
 };
 
 @Injectable()
-export class BigUiService {
+export class BigUiDataService {
 	constructor(private http: HttpService) {}
 
 	exampleRequest() {

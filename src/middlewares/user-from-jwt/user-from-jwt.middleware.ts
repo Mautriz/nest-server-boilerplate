@@ -4,18 +4,18 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { BpLogger } from '../../configuration/logger/bp-logger.service';
+import { jwtBpVerify } from '../../helpers/jwt.helpers';
 
 @Injectable()
 export class UserFromJwtMiddleware implements NestMiddleware {
-	constructor(private config: BpConfigService, private logger: BpLogger) {
+	constructor(private logger: BpLogger) {
 		logger.setContext('UserFromJwtMiddleware');
 	}
 
 	async use(req: Request, res: Response, next: NextFunction) {
-		const jwtConfig = this.config.get().jwt;
 		const accessToken = this.extractJwt(req);
 		if (!accessToken) return next();
-		const user = jwt.verify(accessToken, jwtConfig.secretKey, { algorithms: [jwtConfig.algorithm] }) as JwtPayload;
+		const user = jwtBpVerify(accessToken);
 		req.user = user;
 		return next();
 	}
