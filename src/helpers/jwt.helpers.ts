@@ -14,6 +14,7 @@ export function jwtRefreshBpEncode(payload: JwtRefreshPayload): string {
 }
 
 export function jwtBpVerify(access_token: string): JwtPayload | undefined {
+	if (!access_token) return;
 	const { secretKey, algorithm } = BpConfig.cfg.jwt;
 	return jwt.verify(access_token, secretKey, {
 		algorithms: [algorithm],
@@ -21,6 +22,7 @@ export function jwtBpVerify(access_token: string): JwtPayload | undefined {
 }
 
 export function jwtRefreshBpVerify(refresh_token: string): JwtRefreshPayload | undefined {
+	if (!refresh_token) return;
 	const { refreshSecretKey, algorithm } = BpConfig.cfg.jwt;
 	return jwt.verify(refresh_token, refreshSecretKey, {
 		algorithms: [algorithm],

@@ -3,12 +3,13 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BpConfig } from './configuration/config/config.service';
 import * as compression from 'compression';
-
+import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
 	app.setGlobalPrefix('api');
 	app.use(compression());
+	app.use(cookieParser());
 
 	const options = new DocumentBuilder()
 		.setTitle('Big Authorization')
